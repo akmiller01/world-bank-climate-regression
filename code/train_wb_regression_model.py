@@ -13,6 +13,7 @@ from transformers import (
     Trainer
 )
 
+
 card = 'alex-miller/ODABert'
 tokenizer = AutoTokenizer.from_pretrained(card, model_max_length=512)
 data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
@@ -49,6 +50,7 @@ training_args = TrainingArguments(
     load_best_model_at_end=True,
     push_to_hub=True,
     save_total_limit=5,
+    report_to=None
 )
 
 trainer = Trainer(

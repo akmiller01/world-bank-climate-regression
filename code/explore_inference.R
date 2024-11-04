@@ -37,6 +37,10 @@ mse(dat$`Climate change`, dat$pred_cap)
 plot(`Climate change`~pred_cap, data=dat)
 
 summary(lm(`Climate change`~pred_cap, data=dat))
+mean(abs(dat$`Climate change` - dat$pred_cap))
+mean(abs(dat$`Climate change` - dat$pred_cap) <= 0.1)
+mean(abs(dat$`Climate change` - dat$pred_cap) <= 0.2)
+mean(abs(dat$`Climate change` - dat$pred_cap) <= 0.3)
 
 # Climate adaptation and mitigation model
 dat$pred_a_cap = pmax(dat$pred_a, 0)
@@ -51,6 +55,10 @@ mse(dat$`Climate adaptation`, dat$pred_a_cap)
 plot(`Climate adaptation`~pred_a_cap, data=dat)
 
 summary(lm(`Climate adaptation`~pred_a_cap, data=dat))
+mean(abs(dat$`Climate adaptation` - dat$pred_a_cap))
+mean(abs(dat$`Climate adaptation` - dat$pred_a_cap) <= 0.1)
+mean(abs(dat$`Climate adaptation` - dat$pred_a_cap) <= 0.2)
+mean(abs(dat$`Climate adaptation` - dat$pred_a_cap) <= 0.3)
 
 mse(dat$`Climate mitigation`, mean(dat$`Climate mitigation`))
 mse(dat$`Climate mitigation`, dat$pred_m)
@@ -58,6 +66,10 @@ mse(dat$`Climate mitigation`, dat$pred_m_cap)
 plot(`Climate mitigation`~pred_m_cap, data=dat)
 
 summary(lm(`Climate mitigation`~pred_m_cap, data=dat))
+mean(abs(dat$`Climate mitigation` - dat$pred_m_cap))
+mean(abs(dat$`Climate mitigation` - dat$pred_m_cap) <= 0.1)
+mean(abs(dat$`Climate mitigation` - dat$pred_m_cap) <= 0.2)
+mean(abs(dat$`Climate mitigation` - dat$pred_m_cap) <= 0.3)
 
 # Check concurrance between labels
 dat$pred_sum = dat$pred_a_cap + dat$pred_m_cap
@@ -74,3 +86,4 @@ Hmisc::describe(dat$between_labels_error)
 dat$between_reality_error = dat$`Climate change` - dat$pred_cap
 plot(between_reality_error~between_labels_error, data=dat)
 summary(lm(between_reality_error~between_labels_error, data=dat))
+

@@ -28,13 +28,23 @@ hist(dat$pred_cap)
 plot(density(dat$pred_cap))
 
 par(mfrow=(c(1, 2)))
-plot(density(dat$`Climate change`))
-plot(density(dat$pred_cap))
+plot(density(dat$`Climate change`), main="Reported climate finance")
+plot(density(dat$pred_cap), main="Predicted climate finance")
 dev.off()
 
 mse(dat$`Climate change`, mean(dat$`Climate change`))
 mse(dat$`Climate change`, dat$pred_cap)
 plot(`Climate change`~pred_cap, data=dat)
+
+library(ggplot2)
+ggplot(dat, aes(x=pred_cap, y=`Climate change`)) +
+  geom_point(alpha=0.5, size=3) +
+  geom_abline(intercept = 0, slope = 1, size = 1, color="blue") +
+  scale_y_continuous(label=scales::percent) +
+  scale_x_continuous(label=scales::percent) +
+  theme_bw() +
+  labs(x="Model predicted climate finance percentage",
+       y="Reported climate finance percentage")
 
 summary(lm(`Climate change`~pred_cap, data=dat))
 mean(dat$`Climate change`)
@@ -80,6 +90,16 @@ dat$pred_sum = pmax(dat$pred_sum, 0)
 dat$pred_sum = pmin(dat$pred_sum, 1)
 
 plot(pred_cap~pred_sum, data=dat)
+
+ggplot(dat, aes(x=pred_sum, y=pred_cap)) +
+  geom_point(alpha=0.5, size=3) +
+  geom_abline(intercept = 0, slope = 1, size = 1, color="blue") +
+  scale_y_continuous(label=scales::percent) +
+  scale_x_continuous(label=scales::percent) +
+  theme_bw() +
+  labs(x="Predicted climate adaptation + predicted climate mitigation",
+       y="Model predicted climate finance percentage")
+
 summary(lm(pred_cap~pred_sum, data=dat))
 mse(dat$pred_cap, dat$pred_sum)
 mse(dat$`Climate change`, dat$pred_cap)

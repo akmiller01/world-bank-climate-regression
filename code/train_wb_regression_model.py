@@ -14,7 +14,7 @@ from transformers import (
 )
 
 
-card = 'alex-miller/ODABert'
+card = 'HIT-TMG/KaLM-embedding-multilingual-mini-instruct-v1'
 tokenizer = AutoTokenizer.from_pretrained(card, model_max_length=512)
 data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
 
@@ -36,12 +36,13 @@ model = AutoModelForSequenceClassification.from_pretrained(
     num_labels=3,
     problem_type='regression'
 )
+model.config.pad_token_id = tokenizer.pad_token_id # For KaLM
 
 training_args = TrainingArguments(
-    'wb-climate-regression',
-    learning_rate=2e-6,
-    per_device_train_batch_size=24,
-    per_device_eval_batch_size=24,
+    'wb-climate-regression-kalm',
+    learning_rate=1e-5,
+    per_device_train_batch_size=4,
+    per_device_eval_batch_size=4,
     num_train_epochs=20,
     weight_decay=0.01,
     eval_strategy='epoch',

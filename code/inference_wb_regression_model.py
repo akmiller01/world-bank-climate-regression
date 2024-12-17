@@ -5,9 +5,10 @@ from datasets import load_dataset
 global TOKENIZER
 global DEVICE
 global MODEL
-TOKENIZER = AutoTokenizer.from_pretrained('alex-miller/ODABert', model_max_length=512)
+card = 'alex-miller/wb-climate-regression-kalm'
+TOKENIZER = AutoTokenizer.from_pretrained(card, model_max_length=512)
 DEVICE = 'cuda:0' if torch.cuda.is_available() else 'cpu'
-MODEL = AutoModelForSequenceClassification.from_pretrained('alex-miller/wb-climate-regression')
+MODEL = AutoModelForSequenceClassification.from_pretrained(card)
 MODEL = MODEL.to(DEVICE)
 
 def inference(model, inputs):
@@ -26,7 +27,7 @@ def map_columns(example):
 def main():
     dataset = load_dataset('alex-miller/wb-climate-percentage', split='test')
     dataset = dataset.map(map_columns)
-    dataset.to_csv('output/wb_regression_inference.csv')
+    dataset.to_csv('output/wb_regression_inference_kalm.csv')
 
 
 if __name__ == '__main__':

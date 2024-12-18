@@ -25,9 +25,9 @@ def map_columns(example):
     return example
 
 def main():
-    dataset = load_dataset('alex-miller/wb-climate-percentage', split='test')
+    dataset = load_dataset('alex-miller/wb-climate-percentage', split='train').shuffle(seed=1337).select(range(100))
     dataset = dataset.map(map_columns)
-    dataset.to_csv('output/wb_regression_inference_kalm.csv')
+    dataset.to_csv('output/wb_regression_inference_kalm_train.csv')
 
 
 if __name__ == '__main__':

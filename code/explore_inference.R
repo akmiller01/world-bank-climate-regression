@@ -11,7 +11,7 @@ setwd("../")
 mse = function(x, p){return(mean((x-p)^2))}
 
 # Climate change total
-dat = fread("output/wb_regression_inference_kalm.csv")
+dat = fread("output/wb_regression_inference_kalm_train.csv")
 dat$`Climate change` = pmin(dat$`Climate change`, 1)
 plot(dat$`Climate change`[order(dat$`Climate change`)])
 hist(dat$`Climate change`)
